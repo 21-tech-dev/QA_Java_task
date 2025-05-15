@@ -2,45 +2,45 @@ import java.util.Scanner;
 
 public class NumberOperations {
     public static void main(String[] args) {
-        try (Scanner scanner = new Scanner(System.in)) {
-            System.out.print("Введите первое число (a): ");
-            int a = readInt(scanner);
-            
-            System.out.print("Введите второе число (b): ");
-            int b = readInt(scanner);
+        Scanner scanner = new Scanner(System.in);
 
-            compareNumbers(a, b);
-            performOperations(a, b);
+        int a = readInt(scanner, "Введите первое число (a): ");
+        int b = readInt(scanner, "Введите второе число (b): ");
+
+        compare(a, b);
+        printResults(a, b);
+
+        scanner.close();
+    }
+
+    private static int readInt(Scanner scanner, String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            try {
+                return Integer.parseInt(scanner.nextLine().trim());
+            } catch (NumberFormatException e) {
+                System.out.println("Ошибка: введите целое число.");
+            }
         }
     }
 
-    private static int readInt(Scanner scanner) {
-        while (!scanner.hasNextInt()) {
-            System.out.println("Ошибка: введите целое число!");
-            scanner.next();
-        }
-        return scanner.nextInt();
-    }
-
-    private static void compareNumbers(int a, int b) {
-        if (a > b) {
-            System.out.println("a > b");
-        } else if (a < b) {
-            System.out.println("a < b");
+    private static void compare(int a, int b) {
+        if (a == b) {
+            System.out.println("Числа равны");
         } else {
-            System.out.println("a = b");
+            System.out.printf("Число %d %s числа %d%n", a, a > b ? "больше" : "меньше", b);
         }
     }
 
-    private static void performOperations(int a, int b) {
-        System.out.println("Сумма: " + ((long) a + b));
-        System.out.println("Разность: " + ((long) a - b));
-        System.out.println("Произведение: " + ((long) a * b));
-        
+    private static void printResults(int a, int b) {
+        System.out.println("Сумма: " + (a + b));
+        System.out.println("Разность: " + (a - b));
+        System.out.println("Произведение: " + (a * b));
+
         if (b != 0) {
             System.out.println("Деление: " + ((double) a / b));
         } else {
-            System.out.println("Деление на ноль невозможно");
+            System.out.println("Делить на ноль нельзя.");
         }
     }
 }
